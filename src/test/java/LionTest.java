@@ -17,6 +17,7 @@ public class LionTest {
 
     @Test
     public void checkHasManeTrueWhenSexLionMaleTest() throws Exception {
+        Feline feline = new Feline();
         Lion lion = new Lion("Самец",feline);
         boolean hasMane = lion.doesHaveMane();
         Assert.assertTrue(hasMane);
@@ -24,6 +25,7 @@ public class LionTest {
 
     @Test
     public void checkHasManeFalseWhenSexLionFemaleTest() throws Exception {
+        Feline feline = new Feline();
         Lion lion = new Lion("Самка",feline);
         boolean hasMane = lion.doesHaveMane();
         Assert.assertFalse(hasMane);
@@ -31,6 +33,7 @@ public class LionTest {
 
     @Test
     public void lionGetKittensPositiveTest() throws Exception {
+        Feline feline = new Feline();
         Lion lion = new Lion("Самец", feline);
         int expected = 1;
         Mockito.when(feline.getKittens()).thenReturn(1);
@@ -40,12 +43,21 @@ public class LionTest {
 
     @Test
     public void lionGetFoodPositiveTest() throws Exception {
+        Feline feline = new Feline();
         Lion lion = new Lion("Самец", feline);
         List<String> expected = List.of("Животные", "Птицы", "Рыба");
         Mockito.when(feline.getFood("Хищник")).thenReturn(List.of("Животные", "Птицы", "Рыба"));
         List<String> actual = lion.getFood();
         Assert.assertEquals(expected, actual);
     }
-
+    @Test
+    public void checkUnknownSexLionHasManeError() {
+        try {
+            new Lion("Василий Пупкин", feline);
+        } catch (Exception thrown) {
+            String expected = "Используйте допустимые значения пола животного - самец или самка";
+            Assert.assertEquals(expected, thrown.getMessage());
+        }
+    }
 }
 
